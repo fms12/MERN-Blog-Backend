@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const {MONGO_URL} = require("./serverConfig")
 
 const connect = async () => {
-  await mongoose.connect("mongodb://127.0.0.1/blog_Dev");
+  await mongoose.connect(process.env.MONGO_URL);
 };
 
 module.exports = connect;
