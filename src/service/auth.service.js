@@ -10,6 +10,7 @@ class AuthService {
 
   async signup(data) {
     try {
+      console.log(data);
       const user = await this.authRepository.create(data);
       return user;
     } catch (error) {

@@ -6,6 +6,9 @@ const authService = new AuthService();
 const signup = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
+    if (!username) throw new FieldRequiredError(`A username`);
+    if (!email) throw new FieldRequiredError(`An email`);
+    if (!password) throw new FieldRequiredError(`A password`);
     const response = await authService.signup({
       username,
       email,
