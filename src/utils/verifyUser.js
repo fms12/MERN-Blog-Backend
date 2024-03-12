@@ -1,19 +1,21 @@
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config/serverConfig");
-const { errorHandler } = require("./error");
+const { errorHandler, NotFoundError } = require("./error");
 
 const verifyToken = (req, res, next) => {
-  const token = req.cookies.access_token; // Use req.cookies instead of req.cookie
-  if (!token) {
-    return next(errorHandler(401, "Unauthorized"));
+  try {
+    const token = req.cookies.access_token; // Use req.cookies instead of req.cookie
+    if (!token) throw new SyntaxError("Token missing or malformed");
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if(!user) throw new Error("Invalid Token");
+      req.user = user;
+      next();
+    });
+
+    
+  } catch (error) {
+    next(error);
   }
-  jwt.verify(token, process.env.JWT_SECRET  , (err, user) => {
-    if (err) {
-      return next(errorHandler(401, "Unauthorized"));
-    }
-    req.user = user;
-    next();
-  });
 };
 
 module.exports = {
