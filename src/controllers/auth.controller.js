@@ -32,8 +32,8 @@ const signup = async (req, res, next) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-    if (!email) throw new FieldRequiredError(`An email`);
-    if (!password) throw new FieldRequiredError(`A password`);
+  if (!email) throw new FieldRequiredError(`An email`);
+  if (!password) throw new FieldRequiredError(`A password`);
   try {
     const { token, user } = await authService.signin({ email, password });
     return res
@@ -53,24 +53,22 @@ const login = async (req, res) => {
       success: false,
       message: "Something went wrong",
       data: {},
-      err: { message: error.message },
+      err: {message :error.message},
     });
   }
 };
 
-
-const logout = async(req,res)=>{
-    res
-      .cookie("access_token", null, {
-        expires: new Date(Date.now()),
-        httpOnly: true,
-      })
-      .sendStatus(200);
-}
-
+const logout = async (req, res) => {
+  res
+    .cookie("access_token", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    })
+    .sendStatus(200);
+};
 
 const resetPassword = async (req, res) => {
- try {
+  try {
     const { email, password } = req.body;
     const response = await authService.resetPassword(email, password);
     return res.status(200).json({
@@ -79,20 +77,19 @@ const resetPassword = async (req, res) => {
       data: {}, // Assuming no additional data is needed
       err: {}, // No error details are included in the response
     });
- } catch (error) {
+  } catch (error) {
     return res.status(500).json({
       success: false,
       message: "Something went wrong",
       data: {},
       err: { message: error.message }, // Only the error message is sent back
     });
- }
-}
-  
+  }
+};
 
 module.exports = {
   signup,
   login,
   logout,
-  resetPassword
+  resetPassword,
 };
