@@ -43,7 +43,7 @@ const login = async (req, res) => {
         httpOnly: true,
         secure: true, // Set the Secure flag for HTTPS
         sameSite: "None", // Set the SameSite attribute if necessary
-        domain: "your-frontend-domain.com", // Set the Domain attribute if necessary
+        domain: "http://localhost:3000", // Set the Domain attribute if necessary
       })
       .json({
         success: true,
