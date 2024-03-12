@@ -7,12 +7,10 @@ const verifyToken = (req, res, next) => {
     const token = req.cookies.access_token; // Use req.cookies instead of req.cookie
     if (!token) throw new SyntaxError("Token missing or malformed");
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if(!user) throw new Error("Invalid Token");
+      if (!user) throw new Error("Invalid Token");
       req.user = user;
       next();
     });
-
-    
   } catch (error) {
     next(error);
   }

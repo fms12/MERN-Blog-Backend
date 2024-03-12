@@ -6,15 +6,23 @@ const bodyParser = require("body-parser");
 const apiRoutes = require("./routes/index");
 const cors = require("cors");
 const app = express();
-app.use(cors());
+
+// Middleware to set CORS headers
+
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Adjust this to match your frontend's origin
+    credentials: true, // This allows cookies to be included in requests
+  })
+);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//   })
-// );
+
+// Use CORS middleware
+
+
 app.use("/api", apiRoutes);
 
 app.listen(8080, async () => {
