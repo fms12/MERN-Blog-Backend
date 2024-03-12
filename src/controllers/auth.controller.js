@@ -41,6 +41,9 @@ const login = async (req, res) => {
       .cookie("access_token", token, {
         expires: new Date(Date.now() + 3600000),
         httpOnly: true,
+        secure: true, // Set the Secure flag for HTTPS
+        sameSite: "None", // Set the SameSite attribute if necessary
+        domain: "your-frontend-domain.com", // Set the Domain attribute if necessary
       })
       .json({
         success: true,
@@ -53,7 +56,7 @@ const login = async (req, res) => {
       success: false,
       message: "Something went wrong",
       data: {},
-      err: {message :error.message},
+      err: { message: error.message },
     });
   }
 };
