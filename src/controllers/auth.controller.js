@@ -55,7 +55,7 @@ const login = async (req, res) => {
         httpOnly: true, // Cookie cannot be accessed by client-side JavaScript
         secure: NODE_ENV === "production", // Set to true if using HTTPS
         sameSite: "strict", // Set to 'strict' or 'lax' depending on your requirements
-        domain: COOKIE_DOMAIN || "localhost", // Set the domain to match your environment
+        domain: "https://mern-blog-fronted.vercel.app/", // Set the domain to match your environment
         path: "/", // The cookie will be accessible on all paths
       })
       .json({
