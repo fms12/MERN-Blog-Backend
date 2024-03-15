@@ -1,5 +1,6 @@
 const AuthService = require("../service/auth.service");
 const { errorHandler, FieldRequiredError } = require("../utils/error");
+const { NODE_ENV, COOKIE_DOMAIN } = require("../config/serverConfig");
 
 const authService = new AuthService();
 
@@ -9,17 +10,28 @@ const signup = async (req, res, next) => {
     if (!username) throw new FieldRequiredError(`A username`);
     if (!email) throw new FieldRequiredError(`An email`);
     if (!password) throw new FieldRequiredError(`A password`);
-    const response = await authService.signup({
+    const { user, token } = await authService.signup({
       username,
       email,
       password,
     });
-    res.status(201).json({
-      success: true,
-      message: "Successfully created a new user",
-      data: { id: response._id, isAdmin: response.isAdmin },
-      err: {},
-    });
+    // Set the cookie with the correct options for your environment
+    res
+      .status(201)
+      .cookie("access_token", token, {
+        expires: new Date(Date.now() + 3600000), // Cookie will expire after 1 hour
+        httpOnly: true, // Cookie cannot be accessed by client-side JavaScript
+        secure: process.env.NODE_ENV === "production", // Set to true if using HTTPS
+        sameSite: "strict", // Set to 'strict' or 'lax' depending on your requirements
+        domain: process.env.COOKIE_DOMAIN || "localhost", // Set the domain to match your environment
+        path: "/", // The cookie will be accessible on all paths
+      })
+      .json({
+        success: true,
+        message: "Successfully created a new user",
+        data: { id: user._id, isAdmin: user.isAdmin },
+        err: {},
+      });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -39,11 +51,12 @@ const login = async (req, res) => {
     return res
       .status(200)
       .cookie("access_token", token, {
-        expires: new Date(Date.now() + 3600000),
-        httpOnly: true,
-        secure: true, // Set the Secure flag for HTTPS
-        sameSite: "None", // Set the SameSite attribute if necessary
-        domain: "http://localhost:3000", // Set the Domain attribute if necessary
+        expires: new Date(Date.now() + 3600000), // Cookie will expire after 1 hour
+        httpOnly: true, // Cookie cannot be accessed by client-side JavaScript
+        secure: process.env.NODE_ENV === "production", // Set to true if using HTTPS
+        sameSite: "strict", // Set to 'strict' or 'lax' depending on your requirements
+        domain: process.env.COOKIE_DOMAIN || "localhost", // Set the domain to match your environment
+        path: "/", // The cookie will be accessible on all paths
       })
       .json({
         success: true,

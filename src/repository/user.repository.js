@@ -21,14 +21,17 @@ class UserRepository {
   async updateUserProfile(body, userId) {
     try {
       const { username, name, profilePicture, bio } = body;
-      const userNameExist = await User.find({ username: username });
-      const emailExist = await User.find({ email: email });
-      if (userNameExist) {
-        throw new AlreadyTakenError("username", "aleary exsits");
-      }
-      if (emailExist) {
-        throw new AlreadyTakenError("email", "aleary exsits ");
-      }
+
+      // Check if the username or email already exists for a different user
+      const userNameExits = await User.findOne({
+        username: { $in: username },
+      });
+
+    if(userNameExits){
+      throw new AlreadyTakenError("username", "already exists");
+    }
+
+      // Update the user profile
       const userData = await User.findByIdAndUpdate(
         userId,
         {
@@ -41,11 +44,9 @@ class UserRepository {
         },
         { new: true }
       ).select("-password");
+
       return userData;
     } catch (error) {
-      if (!username) throw new FieldRequiredError(`A username`);
-      if (!email) throw new FieldRequiredError(`An email`);
-      if (!password) throw new FieldRequiredError(`A password`);
       throw { error };
     }
   }

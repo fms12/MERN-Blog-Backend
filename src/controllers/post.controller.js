@@ -1,6 +1,10 @@
 const PostService = require("../service/post.service");
 const UserService = require("../service/user.service");
-const { UnauthorizedError, FieldRequiredError, NotFoundError } = require("../utils/error");
+const {
+  UnauthorizedError,
+  FieldRequiredError,
+  NotFoundError,
+} = require("../utils/error");
 
 const postService = new PostService();
 const userService = new UserService();
@@ -26,7 +30,7 @@ const create = async (req, res, next) => {
       success: false,
       message: "something went wrong",
       data: {},
-      err: error,
+      err: { message: error.message },
     });
   }
 };
@@ -78,13 +82,12 @@ const getPostBySlug = async (req, res, next) => {
 
 const udpatePost = async (req, res, next) => {
   try {
-        const { loggedUser } = req.user;
-        if (!loggedUser) throw new UnauthorizedError();
+    const loggedUser = req.user;
+    if (!loggedUser) throw new UnauthorizedError();
     if (!req.body.title || !req.body.content) {
       return next(errorHandler(400, "Please provide all required fields"));
     }
     const { slug } = req.params;
-
     const post = await postService.updatePost(req.body, slug);
     return res.status(201).json({
       success: true,
@@ -97,18 +100,18 @@ const udpatePost = async (req, res, next) => {
       success: false,
       message: "something went wrong",
       data: {},
-      err: error,
+      err: { message: error.message },
     });
   }
 };
 
 const deletePost = async (req, res) => {
   try {
-    const { loggedUser } = req.user;
+    const loggedUser = req.user;
     if (!loggedUser) throw new UnauthorizedError();
     const { slug } = req.params;
     const response = await postService.deletePost(slug);
-     if (!response) throw new NotFoundError("Article");
+    if (!response) throw new NotFoundError("Article");
     return res.status(200).json({
       success: true,
       message: "Successfully deleted Post !",
@@ -120,7 +123,7 @@ const deletePost = async (req, res) => {
       success: false,
       message: "something went wrong",
       data: {},
-      err: { message: { body: ["Article deleted successfully"] } },
+      err: { message: error.message },
     });
   }
 };

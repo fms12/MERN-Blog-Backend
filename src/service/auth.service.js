@@ -10,9 +10,12 @@ class AuthService {
 
   async signup(data) {
     try {
-      console.log(data);
       const user = await this.authRepository.create(data);
-      return user;
+      const token = jwt.sign(
+        { id: user._id, isAdmin: user.isAdmin },
+        process.env.JWT_SECRET
+      );
+      return { user, token };
     } catch (error) {
       throw error;
     }
