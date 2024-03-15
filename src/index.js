@@ -11,11 +11,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: COOKIE_DOMAIN, // Adjust this to match your frontend's origin
-    credentials: true, // This allows cookies to be included in requests 
+    origin: "https://mern-blog-fronted.vercel.app", // This should match the origin of your frontend application
+    credentials: true, // This allows cookies to be included in requests
   })
 );
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -24,7 +23,7 @@ app.use(cookieParser());
 
 app.use("/api", apiRoutes);
 
-app.listen(8080, async () => {
+app.listen(PORT, async () => {
   console.log(`server started at ${PORT}`);
   await connect();
   console.log("Mongo Db connected");
