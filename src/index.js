@@ -11,7 +11,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.COOKIE_DOMAIN, // Adjust this to match your frontend's origin
+    origin: COOKIE_DOMAIN, // Adjust this to match your frontend's origin
     credentials: true, // This allows cookies to be included in requests 
   })
 );
@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use("/api", apiRoutes);
 
 app.listen(8080, async () => {
-  console.log(`server started at ${process.env.PORT}`);
+  console.log(`server started at ${PORT}`);
   await connect();
   console.log("Mongo Db connected");
 });
