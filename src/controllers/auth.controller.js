@@ -54,8 +54,10 @@ const login = async (req, res) => {
         expires: new Date(Date.now() + 3600000), // Cookie will expire after 1 hour
         httpOnly: true, // Cookie cannot be accessed by client-side JavaScript
         secure: true, // Set to true if using HTTPS
-        sameSite: "none", // Set to 'strict' or 'lax' depending on your requiremen // Remove 'https://'
+        sameSite: "None", // Set to 'None' for cross-site cookies
         path: "/", // The cookie will be accessible on all paths
+        // Add 'Partitioned' attribute if supported by your environment
+        // partitioned: true
       })
       .json({
         success: true,
