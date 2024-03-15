@@ -1,6 +1,6 @@
 const express = require("express");
 const connect = require("./config/db");
-const { PORT } = require("./config/serverConfig");
+const { PORT ,COOKIE_DOMAIN} = require("./config/serverConfig");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const apiRoutes = require("./routes/index");
