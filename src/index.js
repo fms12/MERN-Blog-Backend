@@ -12,9 +12,7 @@ const app = express();
 app.use(
   cors({
     origin: process.env.COOKIE_DOMAIN, // Adjust this to match your frontend's origin
-    credentials: true, // This allows cookies to be included in requests
-    secure: process.env.NODE_ENV === "production", // Set to true if using HTTPS
-    sameSite: "strict", // Set to 'strict' or 'lax' depending on your requirements
+    credentials: true, // This allows cookies to be included in requests 
   })
 );
 
