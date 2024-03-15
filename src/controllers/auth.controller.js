@@ -54,7 +54,7 @@ const login = async (req, res) => {
        expires: new Date(Date.now() + 3600000), // 1 hour
        httpOnly: true,
        secure: true,
-       sameSite: "None",
+       sameSite: "Secure",
        path: "/",
        partitioned: true, // Add if supported by your environment
      })
