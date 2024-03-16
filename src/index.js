@@ -18,6 +18,24 @@ app.use(
 );
 app.set("trust proxy", 1);
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({
+      mongoUrl: process.env.MONGO_URL, // Changed from 'url' to 'mongoUrl'
+      collection: "sessions",
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // Session expiration time in milliseconds
+      sameSite: "none",
+      secure: true,
+      httpOnly: true,
+      domain: "https://mern-blog-fronted.vercel.app", //Set to .vercel.app (frontend)
+    },
+  })
+);
 app.use(bodyParser.json());
 app.use(cookieParser());
 
