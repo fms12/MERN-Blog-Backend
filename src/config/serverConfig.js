@@ -8,4 +8,5 @@ module.exports = {
   MONGO_URL: process.env.MONGO_URL,
   NODE_ENV: process.env.NODE_ENV,
   COOKIE_DOMAIN: process.env.COOKIE_DOMAIN,
+  SECRET: process.env.SECRET
 };

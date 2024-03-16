@@ -48,22 +48,13 @@ const login = async (req, res) => {
   if (!password) throw new FieldRequiredError(`A password`);
   try {
     const { token, user } = await authService.signin({ email, password });
-   return res
-     .status(200)
-     .cookie("access_token", token, {
-       expires: new Date(Date.now() + 3600000), // 1 hour
-       httpOnly: true,
-       secure: true,
-       sameSite: "None",
-       path: "/",
-       partitioned: true, // Add if supported by your environment
-     })
-     .json({
-       success: true,
-       message: "Successfully logged in",
-       data: { id: user._id, isAdmin: user.isAdmin },
-       err: {},
-     });
+    req.session.token = token;
+    return res.status(200).json({
+      success: true,
+      message: "Successfully logged in",
+      data: { id: user._id, isAdmin: user.isAdmin },
+      err: {},
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
