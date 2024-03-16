@@ -21,9 +21,9 @@ const signup = async (req, res, next) => {
       .cookie("access_token", token, {
         expires: new Date(Date.now() + 3600000), // Cookie will expire after 1 hour
         httpOnly: true, // Cookie cannot be accessed by client-side JavaScript
-        secure: NODE_ENV === "production", // Set to true if using HTTPS
-        sameSite: "strict", // Set to 'strict' or 'lax' depending on your requirements
-        domain: COOKIE_DOMAIN || "localhost", // Set the domain to match your environment
+        secure: true, // Set to true if using HTTPS
+        sameSite: "none", // Set to 'strict' or 'lax' depending on your requirements
+         // Set the domain to match your environment
         path: "/", // The cookie will be accessible on all paths
       })
       .json({
@@ -48,9 +48,17 @@ const login = async (req, res) => {
   if (!password) throw new FieldRequiredError(`A password`);
   try {
     const { token, user } = await authService.signin({ email, password });
-    req.session.token = token;
+    
     return res
       .status(200)
+      .cookie("access_token", token, {
+        expires: new Date(Date.now() + 3600000), // Cookie will expire after 1 hour
+       // Cookie cannot be accessed by client-side JavaScript
+        secure: true, // Set to true if using HTTPS
+        sameSite: "none", // Set to 'strict' or 'lax' depending on your requirements
+        domain: "mern-blog-fronted.vercel.app", // Remove 'https://'
+        path: "/", // The cookie will be accessible on all paths
+      })
       .json({
         success: true,
         message: "Successfully logged in",
