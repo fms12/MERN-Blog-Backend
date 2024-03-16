@@ -55,7 +55,6 @@ const login = async (req, res) => {
        httpOnly: true,
        secure: true,
        sameSite: "None",
-       domain: "mern-blog-fronted.vercel.app",
        path: "/",
        partitioned: true, // Add if supported by your environment
      })
