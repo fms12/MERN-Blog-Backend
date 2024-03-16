@@ -10,9 +10,6 @@ const cors = require("cors");
 const app = express();
 
 // Middleware to set CORS headers
-
-
-
 app.use(
   cors({
     origin: "https://mern-blog-fronted.vercel.app", // This should match the origin of your frontend application
@@ -21,30 +18,13 @@ app.use(
 );
 app.set("trust proxy", 1);
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  session({
-    secret: process.env.SECRET, // Change this to a secure random string
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 604800000, // one week
-      sameSite: "none",
-      secure: true,
-    },
-    store: new MongoStore({
-      mongoUrl: process.env.MONGO_URL,
-      collection: "sessions",
-    }),
-  })
-);
-
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Use CORS middleware
-// app.get("/", (req, res) => {
-//   res.json({ do: "SMILE", start: "Developing something great & keep :) :)" });
-// });
+app.get("/", (req, res) => {
+  res.json({ do: "SMILE", start: "Developing something great & keep :) :)" });
+});
 app.use("/api", apiRoutes);
 
 app.listen(PORT, async () => {
