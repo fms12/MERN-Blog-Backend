@@ -56,7 +56,8 @@ const login = async (req, res) => {
         httpOnly: true, // Cookie cannot be accessed by client-side JavaScript
         secure: true, // Set to true if using HTTPS
         sameSite: "none", // Set to 'strict' or 'lax' depending on your requirements // Remove 'https://'
-        path: "/", // The cookie will be accessible on all paths
+        path: "/",
+        partitioned: true, // The cookie will be accessible on all paths
       })
       .json({
         success: true,
