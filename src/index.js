@@ -32,7 +32,7 @@ app.use(
       secure: true,
     },
     store: new MongoStore({
-      url: process.env.MONGO_URL,
+      mongoUrl: process.env.MONGO_URL,
       collection: "sessions",
     }),
   })
@@ -42,9 +42,9 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Use CORS middleware
-app.get("/", (req, res) => {
-  res.json({ do: "SMILE", start: "Developing something great & keep :) :)" });
-});
+// app.get("/", (req, res) => {
+//   res.json({ do: "SMILE", start: "Developing something great & keep :) :)" });
+// });
 app.use("/api", apiRoutes);
 
 app.listen(PORT, async () => {
