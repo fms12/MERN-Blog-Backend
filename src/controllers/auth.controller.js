@@ -55,8 +55,7 @@ const login = async (req, res) => {
         expires: new Date(Date.now() + 3600000), // Cookie will expire after 1 hour
         httpOnly: true, // Cookie cannot be accessed by client-side JavaScript
         secure: true, // Set to true if using HTTPS
-        sameSite: "none", // Set to 'strict' or 'lax' depending on your requirements
-        domain: "mern-blog-fronted.vercel.app", // Remove 'https://'
+        sameSite: "none", // Set to 'strict' or 'lax' depending on your requirements // Remove 'https://'
         path: "/", // The cookie will be accessible on all paths
       })
       .json({
