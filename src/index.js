@@ -23,7 +23,7 @@ app.set("trust proxy", 1);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: SECRET, // Change this to a secure random string
+    secret: process.env.SECRET, // Change this to a secure random string
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -32,9 +32,8 @@ app.use(
       secure: true,
     },
     store: new MongoStore({
-      url: MONGO_URL,
+      url: process.env.MONGO_URL,
       collection: "sessions",
-      ttl: 604800,
     }),
   })
 );
