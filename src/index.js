@@ -1,10 +1,14 @@
 const express = require("express");
 const connect = require("./config/db");
-const { PORT ,COOKIE_DOMAIN, SECRET, MONGO_URL} = require("./config/serverConfig");
+const {
+  PORT,
+  COOKIE_DOMAIN,
+  SECRET,
+  MONGO_URL,
+} = require("./config/serverConfig");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const apiRoutes = require("./routes/index");
-const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const cors = require("cors");
 const app = express();
@@ -13,7 +17,8 @@ const app = express();
 app.use(
   cors({
     origin: "https://mern-blog-fronted.vercel.app", // This should match the origin of your frontend application
-    credentials: true, // This allows cookies to be included in requests
+    credentials: true,
+    // This allows cookies to be included in requests
   })
 );
 app.set("trust proxy", 1);
