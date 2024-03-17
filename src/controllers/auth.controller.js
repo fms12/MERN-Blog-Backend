@@ -37,7 +37,7 @@ const signup = async (req, res, next) => {
       success: false,
       message: "Something went wrong ",
       data: {},
-      err: { message: error.message },
+      err: error.message ,
     });
   }
 };
@@ -70,7 +70,7 @@ const login = async (req, res) => {
       success: false,
       message: "Something went wrong",
       data: {},
-      err: { message: error.message },
+      err: error.message,
     });
   }
 };

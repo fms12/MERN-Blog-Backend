@@ -1,6 +1,7 @@
 const { AuthRepository, UserRepository } = require("../repository/index");
 const { JWT_SECRET } = require("../config/serverConfig");
 const jwt = require("jsonwebtoken");
+const { ValidationError, NotFoundError } = require("../utils/error");
 
 class AuthService {
   constructor() {
@@ -45,7 +46,7 @@ class AuthService {
       return { token, user: rest };
     } catch (error) {
       console.log(error);
-      throw { error };
+      throw error ;
     }
   }
 
@@ -60,7 +61,7 @@ class AuthService {
       return { message: "Password update successfully" };
     } catch (error) {
       console.log(error);
-      throw { error };
+      throw  error ;
     }
   }
 }
