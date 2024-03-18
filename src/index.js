@@ -9,7 +9,6 @@ const {
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const apiRoutes = require("./routes/index");
-const MongoStore = require("connect-mongo");
 const cors = require("cors");
 const app = express();
 
@@ -17,6 +16,7 @@ const app = express();
 app.use(
   cors({
     origin: "https://mern-blog-fronted.vercel.app", // This should match the origin of your frontend application
+    methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
     // This allows cookies to be included in requests
   })
