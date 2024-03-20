@@ -14,7 +14,6 @@ const { customCors } = require("./utils/cors");
 const app = express();
 
 // Middleware to set CORS headers
-app.use(customCors);
 app.use(
   cors({
     origin: "https://mern-blog-fronted.vercel.app", // This should match the origin of your frontend application
@@ -23,6 +22,7 @@ app.use(
     // This allows cookies to be included in requests
   })
 );
+app.use(customCors);
 app.set("trust proxy", 1);
 app.use(bodyParser.urlencoded({ extended: true }));
 
