@@ -22,7 +22,6 @@ app.use(
     // This allows cookies to be included in requests
   })
 );
-app.use(customCors);
 app.set("trust proxy", 1);
 app.use(bodyParser.urlencoded({ extended: true }));
 
