@@ -17,3 +17,7 @@ function customCors(req, res, next) {
   }
   next();
 }
+
+module.exports = {
+  customCors,
+};

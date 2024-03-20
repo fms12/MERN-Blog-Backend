@@ -10,10 +10,11 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const apiRoutes = require("./routes/index");
 const cors = require("cors");
+const { customCors } = require("./utils/cors");
 const app = express();
 
 // Middleware to set CORS headers
-app.use(customCors)
+app.use(customCors);
 app.use(
   cors({
     origin: "https://mern-blog-fronted.vercel.app", // This should match the origin of your frontend application
