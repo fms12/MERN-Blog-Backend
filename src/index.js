@@ -13,6 +13,7 @@ const cors = require("cors");
 const app = express();
 
 // Middleware to set CORS headers
+app.use(customCors)
 app.use(
   cors({
     origin: "https://mern-blog-fronted.vercel.app", // This should match the origin of your frontend application
